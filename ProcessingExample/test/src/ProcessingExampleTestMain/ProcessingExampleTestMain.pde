@@ -7,16 +7,18 @@ Manager manager;
 ExtTrigExecutionContextService ec0Ref;
 
 public void setup() {
+  // Initialize manager
   String[] args = {"processing", "-o", "exec_cxt.periodic.type:jp.go.aist.rtm.RTC.executionContext.OpenHRPExecutionContext"};
-  //String[] args = {"processing"};
   manager = Manager.init(args);
+  // Set module initialization proceduer
+  // This procedure will be invoked in activateManager() function.
   ProcessingExampleTestComp init = new ProcessingExampleTestComp();
   manager.setModuleInitProc(init);
+  // Activate manager and register to naming service
   manager.activateManager();
   
-  //manager.runManager();
-  
-  
+  // run the manager in non-blocking mode
+  // runManager(true) is the default.
   manager.runManager(true);
   
   CorbaConsumer<ExtTrigExecutionContextService> ec0c = new CorbaConsumer<ExtTrigExecutionContextService>(ExtTrigExecutionContextService.class);
